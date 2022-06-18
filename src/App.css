@@ -1,7 +1,8 @@
 .App {
   text-align: center;
-  backgrond-color: #282c34;
+  background-color: #282c34;
   min-height: 100vh;
+  color: #fff;
 }
 
 .App-logo {
@@ -33,11 +34,36 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.calendar {
+  display: block;
+  width: 600px;
+  margin: auto;
+  padding: 8px;
+  border: 1px solid red;
+}
+.calendar_head {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.calendar__days {
+  display: flex;
+  justify-content: space-evenly;
+}
+.calendar__day {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar__active {
+  background-color: grey;
+  border-radius: 50%;
+}
+.calendar__today {
+  background-color: green;
+  border-radius: 50%;
 }
