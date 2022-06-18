@@ -39,7 +39,7 @@
   width: 600px;
   margin: auto;
   padding: 8px;
-  border: 1px solid red;
+  border: 1px solid #fff;
 }
 .calendar_head {
   display: flex;
