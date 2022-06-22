@@ -10,9 +10,9 @@ import {
 import React, { useState } from 'react';
 import './App.css';
 
-function DayComp({ dayArr, todaysDate, selectedDate }: {
+function DayComp({ dayArr, todaysDate, setSelectedDate }: {
   dayArr: Date[]; todaysDate: Date;
-  selectedDate: React.Dispatch<React.SetStateAction<Date>>
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>
 }) {
   const initialSelectedDay = format(todaysDate, 'd');
   const [selectedDay, setSelectedDay] = useState(initialSelectedDay);
@@ -29,7 +29,7 @@ function DayComp({ dayArr, todaysDate, selectedDate }: {
           : 'calendar__day'} ${today} animated-button`}
         onClick={() => {
           setSelectedDay(dayNumber);
-          selectedDate(dayObj);
+          setSelectedDate(dayObj);
         }}
       >
         <span>{day}</span>
@@ -40,9 +40,9 @@ function DayComp({ dayArr, todaysDate, selectedDate }: {
   return <div className="calendar__days">{days}</div>;
 }
 
-function GetRange({ date, todaysDate, selectedDate }: {
+function GetRange({ date, todaysDate, setSelectedDate }: {
   date: Date; todaysDate: Date;
-  selectedDate: React.Dispatch<React.SetStateAction<Date>>
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>
 }) {
   const threeDaysAfter = addDays(date, 3);
   const threeDaysBehind = subDays(date, 3);
@@ -50,7 +50,7 @@ function GetRange({ date, todaysDate, selectedDate }: {
     start: threeDaysBehind,
     end: threeDaysAfter,
   });
-  return <DayComp todaysDate={todaysDate} dayArr={dayArr} selectedDate={selectedDate} />;
+  return <DayComp todaysDate={todaysDate} dayArr={dayArr} setSelectedDate={setSelectedDate} />;
 }
 
 function App() {
@@ -85,7 +85,7 @@ function App() {
           </button>
         </div>
         <div className="calendar-body">
-          <GetRange date={currentDate} todaysDate={date} selectedDate={setSelectedDate} />
+          <GetRange date={currentDate} todaysDate={date} setSelectedDate={setSelectedDate} />
         </div>
       </div>
       <div className="calendar-output">
