@@ -23,12 +23,20 @@
   padding: 8px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.calendar_head {
+.calendar-head {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-.calendar_body{
+.calendar-body{
+}
+
+.calendar-output{
+  margin:auto;
+  padding:4px;
+  margin-top:16px;
+  border:1px solid #F7CA18;
+  width:fit-content;
 }
 .calendar__days {
   display: flex;

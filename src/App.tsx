@@ -10,7 +10,10 @@ import {
 import React, { useState } from 'react';
 import './App.css';
 
-function DayComp({ dayArr, todaysDate }: { dayArr: Date[]; todaysDate: Date }) {
+function DayComp({ dayArr, todaysDate, selectedDate }: {
+  dayArr: Date[]; todaysDate: Date;
+  selectedDate: React.Dispatch<React.SetStateAction<Date>>
+}) {
   const initialSelectedDay = format(todaysDate, 'd');
   const [selectedDay, setSelectedDay] = useState(initialSelectedDay);
   const days = dayArr.map((dayObj) => {
@@ -26,6 +29,7 @@ function DayComp({ dayArr, todaysDate }: { dayArr: Date[]; todaysDate: Date }) {
           : 'calendar__day'} ${today} animated-button`}
         onClick={() => {
           setSelectedDay(dayNumber);
+          selectedDate(dayObj);
         }}
       >
         <span>{day}</span>
@@ -36,20 +40,24 @@ function DayComp({ dayArr, todaysDate }: { dayArr: Date[]; todaysDate: Date }) {
   return <div className="calendar__days">{days}</div>;
 }
 
-function GetRange({ date, todaysDate }: { date: Date; todaysDate: Date }) {
+function GetRange({ date, todaysDate, selectedDate }: {
+  date: Date; todaysDate: Date;
+  selectedDate: React.Dispatch<React.SetStateAction<Date>>
+}) {
   const threeDaysAfter = addDays(date, 3);
   const threeDaysBehind = subDays(date, 3);
   const dayArr = eachDayOfInterval({
     start: threeDaysBehind,
     end: threeDaysAfter,
   });
-  return <DayComp todaysDate={todaysDate} dayArr={dayArr} />;
+  return <DayComp todaysDate={todaysDate} dayArr={dayArr} selectedDate={selectedDate} />;
 }
 
 function App() {
   const date = new Date();
   const [currentWk, setCurrentWk] = useState(getWeek(date));
   const [currentDate, setCurrentDate] = useState(date);
+  const [selectedDate, setSelectedDate] = useState(currentDate);
   const handleNext = () => {
     setCurrentWk(currentWk + 1);
     setCurrentDate(addWeeks(currentDate, 1));
@@ -65,7 +73,7 @@ function App() {
         <h1>Ergeon Test</h1>
       </header>
       <div className="calendar">
-        <div className="calendar_head">
+        <div className="calendar-head">
           <button type="button" className="slide slide-left" onClick={handlePrev}>
             <i className="icon-arrow-left" />
             <span>Prev</span>
@@ -76,9 +84,12 @@ function App() {
             <i className="icon-arrow-right" />
           </button>
         </div>
-        <div className="calendar_body">
-          <GetRange date={currentDate} todaysDate={date} />
+        <div className="calendar-body">
+          <GetRange date={currentDate} todaysDate={date} selectedDate={setSelectedDate} />
         </div>
+      </div>
+      <div className="calendar-output">
+        {selectedDate.toDateString()}
       </div>
     </div>
   );
